@@ -1,6 +1,7 @@
 import express from "express";
 import "dotenv/config";
 import { databaseInit } from "./database/connectPostgres.js";
+import authRouter from "./routes/auth.js";
 
 const app = express();
 const PORT = 8585;
@@ -17,6 +18,8 @@ app.get("/helloworld-json", (req, res) => {
 });
 
 databaseInit();
+
+app.use("/auth", authRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
