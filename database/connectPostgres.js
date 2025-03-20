@@ -3,6 +3,7 @@ import createFilesTable from "../models/file.js";
 import createUsersTable from "../models/user.js";
 import createProductsTable from "../models/product.js";
 import createCartItemsTable from "../models/cartItem.js";
+import createGuestCartsTable from "../models/guestCart.js";
 import createItemsTable from "../models/items.js";
 import createOrdersTable from "../models/order.js";
 import createOrderedProductsTable from "../models/orderedProduct.js";
@@ -35,6 +36,7 @@ export const databaseInit = async () => {
     await createUsersTable();
     await createProductsTable();
     await createCartItemsTable();
+    await createGuestCartsTable();
     await createItemsTable();
     await createOrdersTable();
     await createOrderedProductsTable();
