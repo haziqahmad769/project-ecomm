@@ -7,6 +7,7 @@ import createGuestCartsTable from "../models/guestCart.js";
 import createItemsTable from "../models/items.js";
 import createOrdersTable from "../models/order.js";
 import createOrderedProductsTable from "../models/orderedProduct.js";
+import createTriggers from "../models/trigger.js";
 
 const { Pool } = pg;
 
@@ -40,6 +41,9 @@ export const databaseInit = async () => {
     await createItemsTable();
     await createOrdersTable();
     await createOrderedProductsTable();
+
+    //create triggers
+    await createTriggers();
   } catch (error) {
     console.error(error);
     console.error("Database connection failed");
