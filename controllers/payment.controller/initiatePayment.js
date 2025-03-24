@@ -92,7 +92,7 @@ const initiatePayment = async (req, res) => {
       user_id ? user_id : guest_id,
     ]);
 
-    console.log(dbResCheckStockQuery.rows);
+    // console.log(dbResCheckStockQuery.rows);
 
     if (dbResCheckStockQuery.rows.length > 0) {
       return res.status(400).json({
