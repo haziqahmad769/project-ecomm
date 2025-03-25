@@ -63,14 +63,14 @@ const updateProduct = async (req, res) => {
     `;
 
     const dbResUpdateProductQuery = await pool.query(updateProductQuery, [
-      name,
-      description,
-      quantity,
-      price,
-      imgFileId,
-      category,
-      available,
-      product_id,
+      name || null,
+      description || null,
+      quantity || null,
+      price || null,
+      imgFileId || null,
+      category || null,
+      available || null,
+      product_id || null,
     ]);
 
     const updatedProduct = dbResUpdateProductQuery.rows[0];
