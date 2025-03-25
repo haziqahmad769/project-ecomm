@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.js";
 import productRouter from "./routes/product.js";
 import cartRouter from "./routes/cart.js";
 import paymentRouter from "./routes/payment.js";
+import orderRouter from "./routes/order.js";
 
 const app = express();
 const PORT = 8585;
@@ -29,6 +30,7 @@ app.use("/auth", authRouter);
 app.use("/products", productRouter);
 app.use("/carts", cartRouter);
 app.use("/payments", paymentRouter);
+app.use("/orders", orderRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
