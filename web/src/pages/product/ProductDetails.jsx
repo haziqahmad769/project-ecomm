@@ -2,10 +2,9 @@ import { useParams } from "react-router-dom";
 import { PRODUCT_LISTS } from "../../utils/database/dummyDb";
 import { useState } from "react";
 
-const ProductDetails = () => {
+const ProductDetails = ({ addToCart }) => {
   const { productId } = useParams();
   const product = PRODUCT_LISTS.find((item) => item._id === productId);
-
   const [quantity, setQuantity] = useState(1);
 
   if (!product) {
@@ -71,6 +70,7 @@ const ProductDetails = () => {
             </div>
             <button
               className="btn bg-rose-500 text-white hover:bg-rose-600 transition px-4 py-2 rounded-md"
+              onClick={() => addToCart(product, quantity)}
               disabled={product.quantity <= 0}
             >
               Add

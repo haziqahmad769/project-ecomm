@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, addToCart }) => {
   return (
-    <Link to={`/product/${product._id}`} className="block">
-      <div className="card bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-        <figure className="flex justify-center items-center h-48 bg-gray-100 ">
+    <div className="card bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+      <Link to={`/product/${product._id}`} className="block">
+        <figure className="flex justify-center items-center h-48 bg-gray-100">
           <img
             src={product.productImage}
             alt={product.name}
@@ -15,15 +15,19 @@ const ProductCard = ({ product }) => {
           <h2 className="text-lg font-semibold text-gray-900">
             {product.name}
           </h2>
-          <p className="text-sm text-gray-700  mt-1">RM {product.price}</p>
+          <p className="text-sm text-gray-700 mt-1">RM {product.price}</p>
         </div>
-        <div className="p-4 flex justify-end">
-          <button className="btn bg-rose-500 text-white hover:bg-rose-600 transition px-4 py-2 rounded-md">
-            Add
-          </button>
-        </div>
+      </Link>
+      <div className="p-4 flex justify-end">
+        <button
+          className="btn bg-rose-500 text-white hover:bg-rose-600 transition px-4 py-2 rounded-md"
+          onClick={() => addToCart(product)}
+          disabled={product.quantity <= 0}
+        >
+          Add
+        </button>
       </div>
-    </Link>
+    </div>
   );
 };
 
