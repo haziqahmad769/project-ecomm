@@ -42,3 +42,31 @@ export const PRODUCT_LISTS = [
     updatedAt: "2025-03-25T07:50:36.404Z",
   },
 ];
+
+export const ORDER = {
+  OrderId: 12,
+  userId: "22eb8d6e-4a6e-4941-9de7-83c53c0f59fa",
+  name: "John Doe",
+  email: "johndoe@example.com",
+  address: "123, Jalan Bukit, Kuala Lumpur, 50000, Malaysia",
+  phoneNumber: "+60123456789",
+  totalAmount: "560.00",
+  orderedProducts: [
+    {
+      id: 3,
+      _id: "34d3a39e3990e14a8c6c79376db2ec6e",
+      name: "Balang Air",
+      price: 240,
+      productImage: "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp",
+      quantity: 2,
+    },
+    {
+      id: 4,
+      _id: "7c71ab7202169a6d2145e478d16b2b3c",
+      name: "Voucher",
+      price: 10,
+      productImage: "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp",
+      quantity: 8,
+    },
+  ],
+};
