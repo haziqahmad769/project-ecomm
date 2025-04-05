@@ -5,6 +5,7 @@ import ProductDetails from "./pages/product/ProductDetails";
 import CartItems from "./pages/cart/CartItems";
 import Checkout from "./pages/checkout/Checkout";
 import PaymentSucceed from "./pages/payment/PaymentSucceed";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
   const [cart, setCart] = useState(() => {
@@ -132,6 +133,7 @@ function App() {
             />
           }
         />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </div>
   );
