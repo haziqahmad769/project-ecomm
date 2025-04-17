@@ -1,6 +1,7 @@
 import express from "express";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import { databaseInit } from "./database/connectPostgres.js";
 import authRouter from "./routes/auth.js";
 import productRouter from "./routes/product.js";
@@ -15,6 +16,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); // use cookie-parser before defining routes
 app.use("/uploads", express.static("uploads"));
+app.use(
+  cors({
+    origin: process.env.WEB_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 app.get("/helloworld", (req, res) => {
   res.send("<h1>Hello admin!</h1>");

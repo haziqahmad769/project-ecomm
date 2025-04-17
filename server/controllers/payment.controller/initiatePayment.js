@@ -137,18 +137,42 @@ const initiatePayment = async (req, res) => {
       )
       .join("\n");
 
+    // //get user / guest details
+    // let name, email, address, phoneNumber;
+    // if (user_id) {
+    //   const userQuery = `
+    //     SELECT name, email, address, phone_number
+    //     FROM users
+    //     WHERE id = $1
+    //     `;
+    //   const dbResUserQuery = await pool.query(userQuery, [user_id]);
+
+    //   ({ name, email, address } = dbResUserQuery.rows[0]);
+    //   phoneNumber = dbResUserQuery.rows[0].phone_number;
+    // } else {
+    //   //guest details
+    //   ({ name, email, address, phoneNumber } = req.body);
+
+    //   if (!name || !email || !address || !phoneNumber) {
+    //     return res.status(400).json({
+    //       message: "All fields are required",
+    //     });
+    //   }
+
     //get user / guest details
     let name, email, address, phoneNumber;
     if (user_id) {
       const userQuery = `
-        SELECT name, email, address, phone_number
+        SELECT name, email
         FROM users 
         WHERE id = $1
         `;
       const dbResUserQuery = await pool.query(userQuery, [user_id]);
 
-      ({ name, email, address } = dbResUserQuery.rows[0]);
-      phoneNumber = dbResUserQuery.rows[0].phone_number;
+      ({ name, email } = dbResUserQuery.rows[0]);
+
+      // 👇 Pull address & phone from body instead of assuming they’re in DB
+      ({ address, phoneNumber } = req.body);
     } else {
       //guest details
       ({ name, email, address, phoneNumber } = req.body);
@@ -203,8 +227,8 @@ const initiatePayment = async (req, res) => {
         billPriceSetting: 1,
         billPayorInfo: 1,
         billAmount: totalPrice * 100, // convert to cents
-        // billReturnUrl: `${process.env.CLIENT_URL}/payment-success`,
-        // billCallbackUrl: `${process.env.SERVER_URL}/payments/webhook`,
+        billReturnUrl: `${process.env.WEB_URL}/payment-success`,
+        billCallbackUrl: `${process.env.SERVER_URL}/payments/webhook`,
         billExternalReferenceNo: order_id,
         billTo: name,
         billEmail: email,

@@ -8,7 +8,7 @@ const paymentWebhook = async (req, res) => {
       amount, // amount paid
     } = req.body;
 
-    // console.log("Webhook received:", req.body);
+  // console.log("Received Webhook:", req.method, req.body);
 
     //ensure required fields present
     if (!order_id || !status) {
