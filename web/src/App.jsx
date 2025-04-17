@@ -1,140 +1,30 @@
-import { Route, Routes } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
-import ProductDetails from "./pages/product/ProductDetails";
-import CartItems from "./pages/cart/CartItems";
+import ProductDetail from "./pages/product/ProductDetail";
+import CartItem from "./pages/cart/CartItem";
 import Checkout from "./pages/checkout/Checkout";
-import PaymentSucceed from "./pages/payment/PaymentSucceed";
-import AdminDashboard from "./pages/admin/AdminDashboard";
+import PaymentSuccess from "./pages/payment/PaymentSuccess";
+import Dashboard from "./pages/admin/Dashboard";
+import LoginPage from "./pages/login/LoginPage";
+import SignupPage from "./pages/signup/SignupPage";
+import Navbar from "./components/Navbar";
+import { Toaster } from "react-hot-toast";
 
 function App() {
-  const [cart, setCart] = useState(() => {
-    // load cart from localStorage on first render
-    const savedCart = localStorage.getItem("cart");
-    return savedCart
-      ? JSON.parse(savedCart)
-      : { items: [], totalQuantity: 0, totalPrice: 0 };
-  });
-
-  // save cart to localStorage when updates
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  const addToCart = (product, quantity = 1) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.items.find(
-        (item) => item.product._id === product._id
-      );
-
-      const updatedCart = existingItem
-        ? {
-            ...prevCart,
-            items: prevCart.items.map((item) =>
-              item.product._id === product._id
-                ? {
-                    ...item,
-                    quantity: item.quantity + quantity,
-                    totalPrice: (item.quantity + quantity) * item.product.price,
-                  }
-                : item
-            ),
-            totalQuantity: prevCart.totalQuantity + quantity,
-            totalPrice: prevCart.totalPrice + product.price * quantity,
-          }
-        : {
-            ...prevCart,
-            items: [
-              ...prevCart.items,
-              { product, quantity, totalPrice: product.price * quantity },
-            ],
-            totalQuantity: prevCart.totalQuantity + quantity,
-            totalPrice: prevCart.totalPrice + product.price * quantity,
-          };
-
-      return updatedCart;
-    });
-  };
-
-  const updateCartQuantity = (productId, newQuantity) => {
-    setCart((prevCart) => ({
-      ...prevCart,
-      items: prevCart.items.map((item) =>
-        item.product._id === productId
-          ? {
-              ...item,
-              quantity: newQuantity,
-              totalPrice: newQuantity * item.product.price,
-            }
-          : item
-      ),
-      totalQuantity: prevCart.items.reduce(
-        (sum, item) =>
-          item.product._id === productId
-            ? sum + newQuantity
-            : sum + item.quantity,
-        0
-      ),
-      totalPrice: prevCart.items.reduce(
-        (sum, item) =>
-          item.product._id === productId
-            ? sum + newQuantity * item.product.price
-            : sum + item.totalPrice,
-        0
-      ),
-    }));
-  };
-
-  const removeFromCart = (productId) => {
-    setCart((prevCart) => {
-      const updatedItems = prevCart.items.filter(
-        (item) => item.product._id !== productId
-      );
-      return {
-        items: updatedItems,
-        totalQuantity: updatedItems.reduce(
-          (sum, item) => sum + item.quantity,
-          0
-        ),
-        totalPrice: updatedItems.reduce(
-          (sum, item) => sum + item.totalPrice,
-          0
-        ),
-      };
-    });
-  };
-
   return (
     <div>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage addToCart={addToCart} />} />
-        <Route
-          path="/product/:productId"
-          element={<ProductDetails addToCart={addToCart} />}
-        />
-        <Route
-          path="/cart"
-          element={
-            <CartItems
-              cart={cart}
-              updateCartQuantity={updateCartQuantity}
-              removeFromCart={removeFromCart}
-            />
-          }
-        />
-        <Route path="/checkout" element={<Checkout cart={cart} />} />
-        <Route
-          path="/payment-success"
-          element={
-            <PaymentSucceed
-              clearCart={() =>
-                setCart({ items: [], totalQuantity: 0, totalPrice: 0 })
-              }
-            />
-          }
-        />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/product-detail/:productId" element={<ProductDetail />} />
+        <Route path="/cart" element={<CartItem />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
+      <Toaster />
     </div>
   );
 }
