@@ -11,15 +11,26 @@ import createTriggers from "../models/trigger.js";
 
 const { Pool } = pg;
 
-export const pool = new Pool({
-  host: process.env.PGHOST,
-  user: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-  database: process.env.PGDATABASE,
-  max: 20, // set pool max size to 20
-  idleTimeoutMillis: 1000, // close idle clients after 1 second
-  connectionTimeoutMillis: 1000, // return an error after 1 second if connection could not be established
-});
+const isProduction = process.env.NODE_ENV === "production";
+
+export const pool = new Pool(
+  isProduction
+    ? {
+        connectionString: process.env.DATABASE_URL, // Use DATABASE_URL for Render
+        ssl: {
+          rejectUnauthorized: false, // Required for connecting to Render Postgres
+        },
+      }
+    : {
+        host: process.env.PGHOST,
+        user: process.env.PGUSER,
+        password: process.env.PGPASSWORD,
+        database: process.env.PGDATABASE,
+        max: 20, // set pool max size to 20
+        idleTimeoutMillis: 1000, // close idle clients after 1 second
+        connectionTimeoutMillis: 1000,
+      }
+);
 
 export const databaseInit = async () => {
   try {
