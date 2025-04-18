@@ -21,6 +21,8 @@ const addToCart = async (req, res) => {
       res.cookie("guest_id", guest_id, {
         httpOnly: true,
         maxAge: 1 * 24 * 60 * 60 * 1000,
+        sameSite: "None", // ✅ required for cross-site cookies
+        secure: true, // ✅ required when sameSite is "None"
       });
     }
 
