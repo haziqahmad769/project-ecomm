@@ -23,6 +23,7 @@ const addToCart = async (req, res) => {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         sameSite: "None", // ✅ required for cross-site cookies
         secure: true, // ✅ required when sameSite is "None"
+        path: "/", // Add this to ensure the cookie is available across all paths
       });
     }
 
