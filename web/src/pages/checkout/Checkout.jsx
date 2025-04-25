@@ -138,8 +138,11 @@ const Checkout = () => {
     mutationFn: async ({ name, email, address, phoneNumber }) => {
       try {
         const token = localStorage.getItem("jwt");
+        const guestId = localStorage.getItem("guest_id");
+
         const headers = {
           "Content-Type": "application/json",
+          "x-guest-id": guestId || "",
         };
 
         if (token) {
