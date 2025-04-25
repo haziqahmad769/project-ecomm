@@ -1,7 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const Navbar = () => {
+  useEffect(() => {
+    const guestId = localStorage.getItem("guest_id");
+    if (!guestId) {
+      localStorage.setItem("guest_id", uuidv4());
+    }
+  }, []);
+
   // get cart
   const {
     data: cart,
@@ -13,8 +22,11 @@ const Navbar = () => {
     queryFn: async () => {
       try {
         const token = localStorage.getItem("jwt");
+        const guestId = localStorage.getItem("guest_id");
+
         const headers = {
           "Content-Type": "application/json",
+          "x-guest-id": guestId || "",
         };
 
         if (token) {
@@ -46,8 +58,11 @@ const Navbar = () => {
     queryFn: async () => {
       try {
         const token = localStorage.getItem("jwt");
+        const guestId = localStorage.getItem("guest_id");
+
         const headers = {
           "Content-Type": "application/json",
+          "x-guest-id": guestId || "",
         };
 
         if (token) {

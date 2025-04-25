@@ -12,6 +12,12 @@ const optionalAuth = (req, res, next) => {
   if (req.headers.authorization) {
     return isAuth(req, res, next);
   }
+
+  // Hybrid fallback: check for x-guest-id in headers
+  if (!req.cookies.guest_id && req.headers["x-guest-id"]) {
+    req.cookies.guest_id = req.headers["x-guest-id"];
+  }
+  
   next();
 };
 

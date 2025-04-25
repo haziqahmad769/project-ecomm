@@ -1,7 +1,4 @@
-import {
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -18,8 +15,11 @@ const ProductCard = ({ product }) => {
     mutationFn: async ({ product_id, quantity }) => {
       try {
         const token = localStorage.getItem("jwt");
+        const guestId = localStorage.getItem("guest_id");
+
         const headers = {
           "Content-Type": "application/json",
+          "x-guest-id": guestId || "",
         };
 
         if (token) {

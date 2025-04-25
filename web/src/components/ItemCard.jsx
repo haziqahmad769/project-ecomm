@@ -12,8 +12,11 @@ const ItemCard = ({ item, updateQuantity }) => {
     mutationFn: async ({ id, quantity }) => {
       try {
         const token = localStorage.getItem("jwt");
+        const guestId = localStorage.getItem("guest_id");
+
         const headers = {
           "Content-Type": "application/json",
+          "x-guest-id": guestId || "",
         };
 
         if (token) {
@@ -54,8 +57,11 @@ const ItemCard = ({ item, updateQuantity }) => {
     mutationFn: async ({ id }) => {
       try {
         const token = localStorage.getItem("jwt");
+        const guestId = localStorage.getItem("guest_id");
+
         const headers = {
           "Content-Type": "application/json",
+          "x-guest-id": guestId || "",
         };
 
         if (token) {
