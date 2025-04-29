@@ -154,6 +154,7 @@ const ItemCard = ({ item, updateQuantity }) => {
             <button
               className=" hover:bg-gray-200 w-8 h-8 rounded-lg text-gray-500"
               onClick={addQuantity}
+              disabled={item.quantity >= item.product.stock}
             >
               +
             </button>
