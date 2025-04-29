@@ -2,6 +2,7 @@ import ItemCard from "../../components/ItemCard";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../components/Spinner";
 
 const CartItem = () => {
   const navigate = useNavigate();
@@ -95,7 +96,8 @@ const CartItem = () => {
     .toFixed(2);
 
   if (isLoading) {
-    return <div>Loading cart...</div>;
+    // return <div>Loading cart...</div>;
+    return <Spinner/>
   }
 
   if (isError) {

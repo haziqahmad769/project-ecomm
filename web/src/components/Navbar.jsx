@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import Spinner from "./Spinner";
 
 const Navbar = () => {
   useEffect(() => {
@@ -92,7 +93,8 @@ const Navbar = () => {
   });
 
   if (isLoading) {
-    return <div>Loading cart...</div>;
+    // return <div>Loading cart...</div>;
+    return <Spinner/>
   }
 
   if (isError) {

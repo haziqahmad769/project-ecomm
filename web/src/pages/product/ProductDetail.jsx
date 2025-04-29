@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import Spinner from "../../components/Spinner";
 // import { PRODUCT } from "../../utils/database/dummyDb";
 
 const ProductDetail = () => {
@@ -109,7 +110,8 @@ const ProductDetail = () => {
     );
 
   if (isLoading) {
-    return <div>Loading product...</div>;
+    // return <div>Loading product...</div>;
+    return <Spinner/>
   }
 
   if (isPending) {

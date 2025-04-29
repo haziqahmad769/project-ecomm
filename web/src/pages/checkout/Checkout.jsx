@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ItemCard from "../../components/ItemCard";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import Spinner from "../../components/Spinner";
 
 const Checkout = () => {
   //get logged in user
@@ -181,7 +182,8 @@ const Checkout = () => {
   });
 
   if (isLoading) {
-    return <div>Loading cart...</div>;
+    // return <div>Loading cart...</div>;
+    return <Spinner/>
   }
 
   if (isError) {

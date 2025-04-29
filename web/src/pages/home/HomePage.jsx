@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../../components/ProductCard";
 import { MdOutlinePhoneAndroid } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
+import Spinner from "../../components/Spinner";
 // import { PRODUCT_LISTS } from "../../utils/database/dummyDb";
 
 const HomePage = () => {
@@ -47,7 +48,8 @@ const HomePage = () => {
   });
 
   if (isLoading) {
-    return <div>Loading products...</div>;
+    // return <div>Loading products...</div>;
+    return <Spinner />;
   }
 
   if (isError) {

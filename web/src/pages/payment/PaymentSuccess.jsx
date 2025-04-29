@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import Spinner from "../../components/Spinner";
 
 const PaymentSuccess = () => {
   // get order
@@ -50,7 +51,8 @@ const PaymentSuccess = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    // return <div>Loading...</div>;
+    return <Spinner/>
   }
 
   if (isError) {
