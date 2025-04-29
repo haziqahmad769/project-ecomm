@@ -38,6 +38,7 @@ const getCartItems = async (req, res) => {
         p._id,
         p.name,
         p.price,
+        p.quantity AS stock,
         f.path AS product_image
     FROM items i
     JOIN products p ON i.product_id = p.id
@@ -68,7 +69,8 @@ const getCartItems = async (req, res) => {
           id: item.product_id,
           _id: item._id,
           name: item.name,
-          price: parseFloat(item.price),
+          price: parseFloat(item.price).toFixed(2),
+          stock: item.stock,
           productImage: item.product_image
             ? `${process.env.SERVER_URL}/${item.product_image}`
             : null,
