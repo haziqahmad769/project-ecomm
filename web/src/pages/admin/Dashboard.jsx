@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Shop from "./Shop";
+import Orders from "./Orders";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("shop");
@@ -36,7 +37,7 @@ const Dashboard = () => {
         {/* tab content */}
         <div className="">
           {activeTab === "shop" && <Shop />}
-          {activeTab === "orders"}
+          {activeTab === "orders" && <Orders />}
         </div>
       </div>
     </div>

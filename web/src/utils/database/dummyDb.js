@@ -130,9 +130,9 @@ export const ORDER_LISTS = [
   {
     orderId: 26,
     userId: 1,
-    name: "haziq",
+    name: "haziqah abdul halim shah isma",
     email: "haziq@email.com",
-    address: "test_address",
+    address: "LOT 123, JLN KG BARU, TMN TUN, 32040, SERI MANJUNG, PERAK",
     phoneNumber: "0123456789",
     totalAmount: "740.00",
     paid: true,
