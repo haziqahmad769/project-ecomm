@@ -183,7 +183,7 @@ const Checkout = () => {
 
   if (isLoading) {
     // return <div>Loading cart...</div>;
-    return <Spinner/>
+    return <Spinner />;
   }
 
   if (isError) {
@@ -197,11 +197,12 @@ const Checkout = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const fullAddress = `${formData.addressLine1}, ${formData.addressLine2}, ${formData.postcode}, ${formData.city}, ${formData.state}`;
+    const fullPhoneNumber = `+60${formData.phoneNumber}`;
     checkout({
       name: formData.name,
       email: formData.email,
       address: fullAddress,
-      phoneNumber: formData.phoneNumber,
+      phoneNumber: fullPhoneNumber,
     });
   };
 
@@ -222,6 +223,7 @@ const Checkout = () => {
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full p-2 border rounded-md"
+                required
               />
             </div>
             {/* phone number */}
@@ -239,6 +241,7 @@ const Checkout = () => {
                   onChange={handleChange}
                   placeholder="123456789"
                   className="w-full p-2 border rounded-md ml-2"
+                  required
                 />
               </div>
             </div>
@@ -251,6 +254,7 @@ const Checkout = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full p-2 border rounded-md"
+                required
               />
             </div>
           </div>
@@ -265,6 +269,7 @@ const Checkout = () => {
                 onChange={handleChange}
                 placeholder="Address Line 1"
                 className="w-full p-2 border rounded-md mb-4"
+                required
               />
               <input
                 type="text"
@@ -285,6 +290,7 @@ const Checkout = () => {
                 onChange={handleChange}
                 placeholder="Postcode"
                 className="w-full p-2 border rounded-md mb-2"
+                required
               />
               <input
                 type="text"
@@ -293,6 +299,7 @@ const Checkout = () => {
                 onChange={handleChange}
                 placeholder="City"
                 className="w-full p-2 border rounded-md mb-2"
+                required
               />
               <input
                 type="text"
@@ -301,6 +308,7 @@ const Checkout = () => {
                 onChange={handleChange}
                 placeholder="State"
                 className="w-full p-2 border rounded-md mb-2"
+                required
               />
             </div>
           </div>
