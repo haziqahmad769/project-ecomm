@@ -40,6 +40,15 @@ const Shop = () => {
     onSuccess: () => {
       toast.success("Product created");
       queryClient.invalidateQueries({ queryKey: ["cart"] });
+
+      setFormData({
+        image: null,
+        previewImage: null,
+        name: "",
+        price: "",
+        category: "",
+        quantity: "",
+      });
     },
     onError: (error) => {
       toast.error(error.message);
