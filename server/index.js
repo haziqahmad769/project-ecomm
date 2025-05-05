@@ -19,7 +19,7 @@ app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
     origin: process.env.WEB_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization", "x-guest-id"],
     credentials: true,
     // exposedHeaders: ["set-cookie"],

@@ -11,7 +11,7 @@ const getAllOrders = async (req, res) => {
 
     //get all orders
     const ordersQuery = `
-      SELECT id, user_id, guest_id, name, email, address, phone_number, total_amount, paid, created_at
+      SELECT id, user_id, guest_id, name, email, address, phone_number, total_amount, paid, status, created_at
       FROM orders
       ORDER BY created_at DESC
     `;
@@ -75,6 +75,7 @@ const getAllOrders = async (req, res) => {
       phoneNumber: order.phone_number,
       totalAmount: parseFloat(order.total_amount).toFixed(2),
       paid: order.paid,
+      status: order.status,
       orderedProducts: orderedProductsMap[order.id] || [],
     }));
 

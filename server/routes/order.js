@@ -2,6 +2,7 @@ import { Router } from "express";
 import isAuth from "../middlewares/isAuth.js";
 import getOrder from "../controllers/order.controller/getOrder.js";
 import getAllOrders from "../controllers/order.controller/getAllOrders.js";
+import updateStatus from "../controllers/order.controller/updateStatus.js";
 
 const orderRouter = Router();
 
@@ -20,5 +21,6 @@ const optionalAuth = (req, res, next) => {
 
 orderRouter.get("/:order_id", optionalAuth, getOrder);
 orderRouter.get("/", isAuth, getAllOrders);
+orderRouter.patch("/:order_id/status", isAuth, updateStatus);
 
 export default orderRouter;

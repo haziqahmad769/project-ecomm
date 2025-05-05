@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS orders (
     phone_number TEXT NOT NULL,
     total_amount NUMERIC(10,2) NOT NULL,
     paid BOOLEAN DEFAULT FALSE,
+    status TEXT DEFAULT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
 `;
