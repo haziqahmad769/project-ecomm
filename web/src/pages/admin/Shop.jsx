@@ -1,6 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { PRODUCT_LISTS } from "../../utils/database/dummyDb";
+import EditProduct from "./EditProduct";
+import Spinner from "../../components/Spinner";
 
 const Shop = () => {
   //create product
@@ -39,7 +42,7 @@ const Shop = () => {
     },
     onSuccess: () => {
       toast.success("Product created");
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
 
       setFormData({
         image: null,
@@ -80,6 +83,55 @@ const Shop = () => {
     }
   };
 
+  // get all product
+  const {
+    data: products,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      try {
+        const token = localStorage.getItem("jwt");
+        const guestId = localStorage.getItem("guest_id");
+
+        const headers = {
+          "Content-Type": "application/json",
+          "x-guest-id": guestId || "",
+        };
+
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/products`, {
+          method: "GET",
+          credentials: "include",
+          headers,
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Something went wrong");
+        }
+
+        return data;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+  });
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
+
   if (isPending) {
     return <div>Loading...</div>;
   }
@@ -109,6 +161,7 @@ const Shop = () => {
               accept="image/*"
               onChange={handleImageChange}
               className="w-full p-2 border rounded-md"
+              required
             />
             {formData.previewImage && (
               <figure className="rounded-lg w-56 h-56 overflow-hidden shadow-lg mt-2">
@@ -129,6 +182,7 @@ const Shop = () => {
               value={formData.name}
               onChange={handleChange}
               className="w-full p-2 border rounded-md"
+              required
             />
           </div>
           {/* product price */}
@@ -141,6 +195,7 @@ const Shop = () => {
               onChange={handleChange}
               placeholder="RM"
               className="w-full p-2 border rounded"
+              required
             />
           </div>
           {/* product category */}
@@ -152,6 +207,7 @@ const Shop = () => {
               value={formData.category}
               onChange={handleChange}
               className="w-full p-2 border rounded-md"
+              required
             />
           </div>
 
@@ -164,6 +220,7 @@ const Shop = () => {
               value={formData.quantity}
               onChange={handleChange}
               className="w-full p-2 border rounded-md"
+              required
             />
           </div>
           {/* button */}
@@ -171,6 +228,13 @@ const Shop = () => {
             Create Product
           </button>
         </form>
+
+        {/* products */}
+        <div className=" gap-4 border-y-2 mt-6">
+          {products.map((product) => (
+            <EditProduct key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     </div>
   );
