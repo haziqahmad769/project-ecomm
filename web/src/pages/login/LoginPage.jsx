@@ -84,6 +84,7 @@ const LoginPage = () => {
                 onChange={handleChange}
                 placeholder="Email"
                 className="w-full p-2 border rounded-md"
+                required
               />
             </div>
 
@@ -96,6 +97,7 @@ const LoginPage = () => {
                 onChange={handleChange}
                 placeholder="Password"
                 className="w-full p-2 border rounded-md"
+                required
               />
             </div>
 
@@ -104,7 +106,12 @@ const LoginPage = () => {
               Login
             </button>
 
-            {/*  */}
+            {/* forgot password */}
+            <Link to="/forgot-password">
+              <div className="flex justify-center items-center btn btn-link text-gray-500 text-md font-light hover:font-normal">
+                Forgot Password
+              </div>
+            </Link>
           </div>
         </form>
 
