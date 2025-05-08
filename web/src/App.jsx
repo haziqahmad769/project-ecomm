@@ -11,6 +11,8 @@ import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 import ForgotPassword from "./pages/login/ForgotPassword";
 import ResetPassword from "./pages/login/ResetPassword";
+import Apple from "./pages/download/Apple";
+import Android from "./pages/download/Android";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/download/iphone" element={<Apple />} />
+        <Route path="/download/android" element={<Android />} />
       </Routes>
       <Toaster />
     </div>
