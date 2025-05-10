@@ -13,6 +13,8 @@ import ForgotPassword from "./pages/login/ForgotPassword";
 import ResetPassword from "./pages/login/ResetPassword";
 import Apple from "./pages/download/Apple";
 import Android from "./pages/download/Android";
+import PaymentResult from "./pages/payment/PaymentResult";
+import PaymentFailed from "./pages/payment/PaymentFailed";
 
 function App() {
   return (
@@ -23,7 +25,9 @@ function App() {
         <Route path="/product-detail/:productId" element={<ProductDetail />} />
         <Route path="/cart" element={<CartItem />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/payment-result" element={<PaymentResult />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-failed" element={<PaymentFailed />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

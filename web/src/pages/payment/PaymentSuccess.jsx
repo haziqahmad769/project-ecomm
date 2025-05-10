@@ -52,24 +52,42 @@ const PaymentSuccess = () => {
 
   if (isLoading) {
     // return <div>Loading...</div>;
-    return <Spinner/>
+    return <Spinner />;
   }
 
   if (isError) {
     return <div>Error: {error.message}</div>;
   }
 
+  // whatsapp message
+  const message = encodeURIComponent(
+    `*Hi, I just made a purchase*\n` +
+      `Order ID: ${order.orderId}\n` +
+      `Name: ${order.name}\n` +
+      `Phone: ${order.phoneNumber}\n` +
+      `Address: ${order.address}\n\n` +
+      `Ordered Items:\n` +
+      order.orderedProducts
+        .map(
+          (item) => `- ${item.name} X ${item.quantity} (RM${item.totalPrice})`
+        )
+        .join("\n") +
+      `\n\nTotal: RM${order.totalAmount}`
+  );
+
+  const sellerPhone = `${import.meta.env.VITE_SELLER_PHONE}`;
+  const waLink = `https://wa.me/${sellerPhone}?text=${message}`;
+
   return (
     <div className=" flex flex-col items-center p-4">
       {/* card */}
       <div className=" flex flex-col rounded-md card bg-white shadow-lg p-6">
-        <h2 className=" flex flex-col items-center text-rose-500 text-lg font-semibold">
+        <h2 className=" flex flex-col items-center text-emerald-400 text-lg font-semibold">
           Payment Success
         </h2>
         <p className=" flex flex-col items-center text-gray-700 text-sm mb-4">
           Preparing your order
         </p>
-
         <div className=" border-t-2 border-b-2">
           {/* bill */}
           <h3 className=" text-gray-700 text-lg font-bold mt-2">Bill:</h3>
@@ -123,10 +141,18 @@ const PaymentSuccess = () => {
             <p className="text-gray-600 text-md ml-2">RM{order.totalAmount}</p>
           </div>
         </div>
-
         <p className=" flex flex-col items-center text-gray-500 text-sm mb-4">
-          Please screenshot & save your receipt
+          Please notify seller after purchase
         </p>
+        {/* button */}
+        <a
+          href={waLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn bg-rose-500 text-white hover:bg-rose-600 w-full rounded-md text-center py-2"
+        >
+          Notify Seller
+        </a>
       </div>
     </div>
   );
