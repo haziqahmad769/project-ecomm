@@ -3,8 +3,22 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import Spinner from "./Spinner";
+import { jwtDecode } from "jwt-decode";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { HiOutlineBars3 } from "react-icons/hi2";
 
 const Navbar = () => {
+  // check if jwt expired
+  const isTokenExpired = (token) => {
+    try {
+      const decoded = jwtDecode(token);
+      const now = Date.now() / 1000;
+      return decoded.exp < now;
+    } catch {
+      return true;
+    }
+  };
+
   useEffect(() => {
     const guestId = localStorage.getItem("guest_id");
     if (!guestId) {
@@ -25,12 +39,17 @@ const Navbar = () => {
         const token = localStorage.getItem("jwt");
         const guestId = localStorage.getItem("guest_id");
 
+        // if token expired, remove
+        if (token && isTokenExpired(token)) {
+          localStorage.removeItem("jwt");
+        }
+
         const headers = {
           "Content-Type": "application/json",
           "x-guest-id": guestId || "",
         };
 
-        if (token) {
+        if (token && !isTokenExpired(token)) {
           headers["Authorization"] = `Bearer ${token}`;
         }
 
@@ -61,12 +80,17 @@ const Navbar = () => {
         const token = localStorage.getItem("jwt");
         const guestId = localStorage.getItem("guest_id");
 
+        // if token expired, remove
+        if (token && isTokenExpired(token)) {
+          localStorage.removeItem("jwt");
+        }
+
         const headers = {
           "Content-Type": "application/json",
           "x-guest-id": guestId || "",
         };
 
-        if (token) {
+        if (token && !isTokenExpired(token)) {
           headers["Authorization"] = `Bearer ${token}`;
         }
 
@@ -94,7 +118,7 @@ const Navbar = () => {
 
   if (isLoading) {
     // return <div>Loading cart...</div>;
-    return <Spinner/>
+    return <Spinner />;
   }
 
   if (isError) {
@@ -116,7 +140,7 @@ const Navbar = () => {
           {/* cart */}
           <Link to="/cart">
             <button className="btn btn-ghost btn-circle indicator text-gray-700">
-              CART
+              <MdOutlineShoppingCart className="text-xl" />
               {cart.totalQuantity > 0 && (
                 <span className="badge bg-rose-600 text-white font-light rounded-full badge-sm indicator-item">
                   {cart.totalQuantity}
@@ -132,7 +156,7 @@ const Navbar = () => {
               role="button"
               className="btn btn-ghost text-gray-700 ml-4"
             >
-              ...
+              <HiOutlineBars3 className="text-xl" />
             </div>
             <ul
               tabIndex={0}
