@@ -111,7 +111,7 @@ const ProductDetail = () => {
 
   if (isLoading) {
     // return <div>Loading product...</div>;
-    return <Spinner/>
+    return <Spinner />;
   }
 
   if (isPending) {
@@ -134,13 +134,16 @@ const ProductDetail = () => {
           Product Details
         </h2>
         {/* image */}
-        <figure className="rounded-lg w-56 h-56 overflow-hidden shadow-lg">
-          <img
-            src={product.productImage}
-            alt=""
-            className="object-cover w-full h-full"
-          />
-        </figure>
+        <div className="flex justify-center items-center">
+          <figure className="rounded-lg w-56 h-56 overflow-hidden shadow-lg">
+            <img
+              src={product.productImage}
+              alt=""
+              className="object-cover w-full h-full"
+            />
+          </figure>
+        </div>
+
         {/* details */}
         <div className="my-4">
           <h3 className="text-gray-700 font-bold text-xl">{product.name}</h3>
@@ -150,7 +153,7 @@ const ProductDetail = () => {
 
           <div className="mt-2">
             <p className="text-gray-600 text-md">Description:</p>
-            <p className="text-gray-400 text-md">{product.description}</p>
+            <p className="text-gray-400 text-md whitespace-pre-line">{product.description}</p>
           </div>
 
           <div className="mt-2">

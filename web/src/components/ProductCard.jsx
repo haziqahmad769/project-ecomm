@@ -82,7 +82,9 @@ const ProductCard = ({ product }) => {
             {/* details */}
             <div className="my-4">
               <h3 className="text-gray-700 font-semibold text-md">
-                {product.name}
+                {product.name.length > 15
+                  ? `${product.name.slice(0, 15)}...`
+                  : product.name}
               </h3>
               <p className="text-gray-600">RM{product.price}</p>
             </div>
