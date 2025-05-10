@@ -39,22 +39,22 @@ const initiatePayment = async (req, res) => {
     }
 
     //prevent guest from creating multiple unpaid orders
-    if (!user_id) {
-      const unpaidOrderQuery = `
-        SELECT id 
-        FROM orders 
-        WHERE guest_id = $1 AND paid = false
-        `;
-      const dbResUnpaidOrderQuery = await pool.query(unpaidOrderQuery, [
-        guest_id,
-      ]);
+    // if (!user_id) {
+    //   const unpaidOrderQuery = `
+    //     SELECT id 
+    //     FROM orders 
+    //     WHERE guest_id = $1 AND paid = false
+    //     `;
+    //   const dbResUnpaidOrderQuery = await pool.query(unpaidOrderQuery, [
+    //     guest_id,
+    //   ]);
 
-      if (dbResUnpaidOrderQuery.rows.length > 0) {
-        return res.status(400).json({
-          message: "You have an unpaid order. Please complete payment first",
-        });
-      }
-    }
+    //   if (dbResUnpaidOrderQuery.rows.length > 0) {
+    //     return res.status(400).json({
+    //       message: "You have an unpaid order. Please complete payment first",
+    //     });
+    //   }
+    // }
 
     //fetch total price
     const totalPriceQuery = `
@@ -227,7 +227,7 @@ const initiatePayment = async (req, res) => {
         billPriceSetting: 1,
         billPayorInfo: 1,
         billAmount: totalPrice * 100, // convert to cents
-        billReturnUrl: `${process.env.WEB_URL}/payment-success`,
+        billReturnUrl: `${process.env.WEB_URL}/payment-result`,
         billCallbackUrl: `${process.env.SERVER_URL}/payments/webhook`,
         billExternalReferenceNo: order_id,
         billTo: name,
